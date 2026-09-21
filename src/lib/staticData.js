@@ -43,20 +43,20 @@ export const CALENDAR_MATCHES = {
 };
 
 export const TIMELINE_EVENTS = [
-  { date: '2 wrz', day: 'Śr', badge: 'news', title: 'ADP — zmiana zatrudnienia (sie.)', time: '14:15', note: 'Wynik: +38 tys. (prognoza: +48 tys.) — wyraźny niedobitek prognozy przed CPI i FOMC.', major: true },
+  { date: '2 wrz', day: 'Śr', badge: 'news', title: 'ADP — zmiana zatrudnienia (sie.)', time: '14:15', note: 'Wynik: +38 tys. (prognoza: +48 tys.) — wyraźny niedobitek prognozy przed CPI i FOMC.', major: true, sourceUrl: 'https://adpemploymentreport.com/' },
   { date: '8 wrz', day: 'Wt', badge: 'astro', title: 'Księżyc koniunkcja Jowisz (Lew)', time: '~21:00–22:00', note: 'Główny aspekt dnia: skok optymizmu i podatność na przesadzone ruchy ceny.', major: true },
   { date: '9 wrz', day: 'Śr', badge: 'astro', title: 'Księżyc sekstyl Wenus, wejście w Pannę', time: '20:57 / 21:35', note: 'Nastrój się uspokaja, bardziej analityczna faza Księżyca.' },
   { date: '10 wrz', day: 'Czw', badge: 'gann', title: 'Ingres: Merkury → Waga i Wenus → Skorpion', time: '~10:06 / 18:20', note: 'Dwie planety zmieniają znak tego samego dnia — najsilniejszy typ sygnału w tej metodzie.', major: true },
-  { date: '10 wrz', day: 'Czw', badge: 'news', title: 'PPI — inflacja producencka (sie.)', time: '~14:30', note: 'Wczesny sygnał presji cenowej przed CPI.', calId: 'ppi' },
+  { date: '10 wrz', day: 'Czw', badge: 'news', title: 'PPI — inflacja producencka (sie.)', time: '~14:30', note: 'Wczesny sygnał presji cenowej przed CPI.', calId: 'ppi', sourceUrl: 'https://www.bls.gov/news.release/ppi.toc.htm' },
   { date: '11 wrz', day: 'Pt', badge: 'astro', title: 'Księżyc sekstyl Mars (Panna)', time: '07:52', note: 'Sprzyja zdecydowanym, kontrolowanym ruchom.' },
   { date: '11 wrz', day: 'Pt', badge: 'gann', title: 'Księżyc przecina 0° deklinacji', time: '~14:00', note: 'Razem z wczorajszym ingresem najgęstszy sygnałowo klaster miesiąca.', major: true },
-  { date: '11 wrz', day: 'Pt', badge: 'news', title: 'CPI — inflacja konsumencka (sie.)', time: '~14:30', note: 'Duży potencjał zmienności na złocie.', major: true, calId: 'cpi' },
-  { date: '16 wrz', day: 'Śr', badge: 'news', title: 'Decyzja FOMC w sprawie stóp procentowych', time: '~20:00', note: 'Najważniejsze wydarzenie miesiąca dla złota.', major: true, calId: 'fomc' },
+  { date: '11 wrz', day: 'Pt', badge: 'news', title: 'CPI — inflacja konsumencka (sie.)', time: '~14:30', note: 'Duży potencjał zmienności na złocie.', major: true, calId: 'cpi', sourceUrl: 'https://www.bls.gov/cpi/news.htm' },
+  { date: '16 wrz', day: 'Śr', badge: 'news', title: 'Decyzja FOMC w sprawie stóp procentowych', time: '~20:00', note: 'Najważniejsze wydarzenie miesiąca dla złota.', major: true, calId: 'fomc', sourceUrl: 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm' },
   { date: '23 wrz', day: 'Śr', badge: 'gann', title: 'Ingres: Słońce → Waga (równonoc jesienna)', time: '~02:05', note: 'Równonoce to jedne z częściej cytowanych dat zwrotnych u Ganna.' },
-  { date: '29 wrz', day: 'Wt', badge: 'news', title: 'JOLTS — oferty pracy (sie.)', time: '~16:00', note: 'Kolejny odczyt rynku pracy przed PCE.', calId: 'jolts' },
+  { date: '29 wrz', day: 'Wt', badge: 'news', title: 'JOLTS — oferty pracy (sie.)', time: '~16:00', note: 'Kolejny odczyt rynku pracy przed PCE.', calId: 'jolts', sourceUrl: 'https://www.bls.gov/news.release/jolts.htm' },
   { date: '30 wrz', day: 'Śr', badge: 'gann', title: 'Ingres: Merkury → Skorpion', time: '~13:44', note: 'Zbiega się z PCE i PKB tego samego dnia.', major: true },
-  { date: '30 wrz', day: 'Śr', badge: 'news', title: 'PCE — preferowana miara inflacji Fed', time: '~14:30', note: 'Ostatni duży odczyt inflacyjny miesiąca.', major: true, calId: 'pce' },
-  { date: '30 wrz', day: 'Śr', badge: 'news', title: 'PKB USA — trzeci odczyt (Q2)', time: '~14:30', note: 'Zwykle mniejszy wpływ niż PCE.', calId: 'gdp' },
+  { date: '30 wrz', day: 'Śr', badge: 'news', title: 'PCE — preferowana miara inflacji Fed', time: '~14:30', note: 'Ostatni duży odczyt inflacyjny miesiąca.', major: true, calId: 'pce', sourceUrl: 'https://www.bea.gov/news/current-releases' },
+  { date: '30 wrz', day: 'Śr', badge: 'news', title: 'PKB USA — trzeci odczyt (Q2)', time: '~14:30', note: 'Zwykle mniejszy wpływ niż PCE.', calId: 'gdp', sourceUrl: 'https://www.bea.gov/data/gdp/gross-domestic-product' },
 ];
 
 export const X_POSTS = [

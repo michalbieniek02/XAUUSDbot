@@ -126,16 +126,19 @@ export default function CandleChart({ id, rows, width = 460, height = 260, ema =
           <text key={i} x={l.x} y={H - 6} textAnchor="middle" className="candle-axis-x">{l.text}</text>
         ))}
 
-        <line x1={padL} x2={W - padR} y1={lastY} y2={lastY} className="last-price-line" />
-        <rect x={W - padR} y={lastY - 10} width={58} height={20} rx="3.5" className={(lastUp ? 'cd-up' : 'cd-down') + ' price-tag-bg'} />
-        <text x={W - padR + 29} y={lastY + 4.2} textAnchor="middle" className="price-tag-text">{lastRow[4].toFixed(2)}</text>
+        <line x1={padL} x2={W - padR } y1={lastY} y2={lastY} className="last-price-line" />
+        <polygon points={`${W - padR},${lastY} ${W - padR + 5},${lastY - 3} ${W - padR + 5},${lastY + 3}`} className={(lastUp ? 'cd-up' : 'cd-down') + ' price-tag-bg'} />
+        <rect x={W - padR + 5} y={lastY - 10} width={52} height={20} rx="3.5" className={(lastUp ? 'cd-up' : 'cd-down') + ' price-tag-bg'} />
+        <text x={W - padR + 30.7} y={lastY + 3.2} textAnchor="middle" className="price-tag-text">{lastRow[4].toFixed(2)}$</text>
 
         {emaPoints && <polyline points={emaPoints} fill="none" stroke="var(--violet)" strokeWidth="1.4" opacity="0.9" />}
 
         {drawnLevels.map((L, i) => (
           <g key={i} opacity={L.opacity ?? 1}>
             <line x1={padL} x2={W - padR} y1={L.y} y2={L.y} stroke={L.color} strokeWidth={L.strong ? 1.5 : 1} opacity={L.strong ? 0.95 : 0.6} strokeDasharray={L.dash || undefined} />
-            <text x={L.labelX} y={L.y - 4} className="candle-axis" fill={L.color}>{L.label}</text>
+            {hoverY != null && Math.abs(hoverY - L.y) <= 8 && (
+              <text x={L.labelX} y={L.y - 4} className="candle-axis" fill={L.color}>{L.label}</text>
+            )}
           </g>
         ))}
 

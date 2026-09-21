@@ -129,7 +129,7 @@ export default function HistoriaTab({ activeSymbol, signalHistory, manualTrade, 
                 <tbody>
                   {forSymbol.slice(0, 30).map((s) => {
                     const st = signalStatusLabel(s);
-                    const srcLabel = s.source === 'manual' ? 'ręczny test' : s.source === 'engine-backend' ? 'silnik (serwer 24/7)' : 'silnik (przeglądarka)';
+                    const srcLabel = s.source === 'manual' ? 'ręczny test' : s.source === 'test' ? 'test live' : s.source === 'engine-backend' ? 'silnik (serwer 24/7)' : 'silnik (przeglądarka)';
                     const isLive = s.status === 'open' && s.source !== 'manual' && mid != null && rowSymbol(s) === activeSymbol;
                     const displayPnl = isLive ? computePnl(s.dir, s.entry, mid, s.lot, rowSymbol(s)) : s.pnl;
                     return (

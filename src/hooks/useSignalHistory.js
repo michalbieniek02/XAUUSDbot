@@ -22,6 +22,34 @@ export function useSignalHistory({ activeSymbol, symbolRef, m5BarsRaw, price, ov
     } catch (e) { /* noop */ }
   }, [manualTrade]);
 
+  useEffect(() => {
+    if (!isUsablePrice(price)) return;
+    const seedKey = `xauusd_live_test_trades_seeded_v1_${activeSymbol}`;
+    try { if (localStorage.getItem(seedKey)) return; } catch (e) { /* noop */ }
+    const now = Date.now();
+    const configs = [
+      ['BUY', price - 2.4, 12],
+      ['SELL', price + 1.7, 8],
+      ['BUY', price + 0.9, 4],
+    ];
+    const testTrades = configs.map(([dir, entry, minutesAgo], index) => ({
+      id: `test_live_${activeSymbol}_${index + 1}`,
+      ts: new Date(now - minutesAgo * 60000).toISOString(),
+      entryBarTime: new Date(now - minutesAgo * 60000).toISOString(),
+      dir,
+      source: 'test',
+      symbol: activeSymbol,
+      entry: Number(entry.toFixed(2)),
+      sl: Number((dir === 'BUY' ? entry - 100 : entry + 100).toFixed(2)),
+      tp1: Number((dir === 'BUY' ? entry + 100 : entry - 100).toFixed(2)),
+      score: null,
+      lot: 0.05,
+      status: 'open',
+    }));
+    setSignalHistory((prev) => [...testTrades, ...prev.filter((row) => !testTrades.some((trade) => trade.id === row.id))].slice(0, 200));
+    try { localStorage.setItem(seedKey, '1'); } catch (e) { /* noop */ }
+  }, [activeSymbol, price]);
+
   function openManualTrade(dir) {
     if (manualTrade || price == null) return;
     const sl = dir === 'BUY' ? price - 10 : price + 10;

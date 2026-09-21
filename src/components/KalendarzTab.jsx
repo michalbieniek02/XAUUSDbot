@@ -37,7 +37,13 @@ export default function KalendarzTab({ calendarRows }) {
               <div className="tl-when"><div className="day">{ev.date}</div>{ev.day} · {ev.time}</div>
               <div className="tl-body">
                 <div className="tl-top"><span className={'badge ' + ev.badge}>{{ astro: 'Aspekt', news: 'News', gann: 'Gann' }[ev.badge] || ev.badge}</span></div>
-                <div className={'tl-title' + (ev.major ? ' highlight' : '')}>{ev.title}</div>
+                <div className={'tl-title' + (ev.major ? ' highlight' : '')}>
+                  {ev.badge === 'news' && ev.sourceUrl ? (
+                    <a className="news-source-btn" href={ev.sourceUrl} target="_blank" rel="noopener noreferrer">
+                      {ev.title}<span aria-hidden="true">↗</span>
+                    </a>
+                  ) : ev.title}
+                </div>
                 <div className="tl-note" dangerouslySetInnerHTML={{ __html: ev.note }} />
                 {ev.calId && (
                   <div className="tl-note cal-live">

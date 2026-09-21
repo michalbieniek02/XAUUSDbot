@@ -64,6 +64,10 @@ export default function App() {
   // ---- history / manual trade ----
   const { signalHistory, manualTrade, backendStatus, openManualTrade, closeManualTrade, clearHistory } =
     useSignalHistory({ activeSymbol, symbolRef, m5BarsRaw, price, overallFreshness, marketDataLooksLive });
+  const liveTrades = useMemo(
+    () => signalHistory.filter((trade) => trade.status === 'open' && (trade.symbol || 'XAUUSD') === activeSymbol),
+    [signalHistory, activeSymbol],
+  );
 
   const ftmoStrip = useFtmoStrip(riskBalance, riskPercent, signalHistory);
 
@@ -106,7 +110,7 @@ export default function App() {
     <div className="wrap">
       <TopBar
         activeSymbol={activeSymbol} onSymbolChange={setActiveSymbol} symLabel={cfg.label}
-        price={price} changeLabel={changeLabel} bidAsk={bidAsk} dataLabel={dataLabel}
+        price={price} changeLabel={changeLabel} bidAsk={bidAsk} dataLabel={dataLabel} liveTrades={liveTrades}
       />
       <TermTabs activeTab={activeTab} onChange={setActiveTab} />
 
