@@ -10,9 +10,16 @@ function loadJson(key, fallback) {
 // m5BarsRaw: closed M5 bars from useEngineBars — authoritative resolution path.
 // price/overallFreshness/marketDataLooksLive: fast-path live-tick resolution.
 export function useSignalHistory({ activeSymbol, symbolRef, m5BarsRaw, price, overallFreshness, marketDataLooksLive }) {
-  const [signalHistory, setSignalHistory] = useState(() => loadJson('xauusd_signal_history_v1', []));
+  const [signalHistory, setSignalHistory] = useState(() => loadJson('xauusd_signal_history_v1', []).filter((row) => row.source !== 'test' && !String(row.id).startsWith('test_live_')));
   const [manualTrade, setManualTrade] = useState(() => loadJson('xauusd_manual_test_trade_v1', null));
   const [backendStatus, setBackendStatus] = useState(null);
+
+  useEffect(() => {
+    setSignalHistory((prev) => {
+      const cleaned = prev.filter((row) => row.source !== 'test' && !String(row.id).startsWith('test_live_'));
+      return cleaned.length === prev.length ? prev : cleaned;
+    });
+  }, []);
 
   useEffect(() => { try { localStorage.setItem('xauusd_signal_history_v1', JSON.stringify(signalHistory)); } catch (e) { /* noop */ } }, [signalHistory]);
   useEffect(() => {
@@ -21,34 +28,6 @@ export function useSignalHistory({ activeSymbol, symbolRef, m5BarsRaw, price, ov
       else localStorage.removeItem('xauusd_manual_test_trade_v1');
     } catch (e) { /* noop */ }
   }, [manualTrade]);
-
-  useEffect(() => {
-    if (!isUsablePrice(price)) return;
-    const seedKey = `xauusd_live_test_trades_seeded_v1_${activeSymbol}`;
-    try { if (localStorage.getItem(seedKey)) return; } catch (e) { /* noop */ }
-    const now = Date.now();
-    const configs = [
-      ['BUY', price - 2.4, 12],
-      ['SELL', price + 1.7, 8],
-      ['BUY', price + 0.9, 4],
-    ];
-    const testTrades = configs.map(([dir, entry, minutesAgo], index) => ({
-      id: `test_live_${activeSymbol}_${index + 1}`,
-      ts: new Date(now - minutesAgo * 60000).toISOString(),
-      entryBarTime: new Date(now - minutesAgo * 60000).toISOString(),
-      dir,
-      source: 'test',
-      symbol: activeSymbol,
-      entry: Number(entry.toFixed(2)),
-      sl: Number((dir === 'BUY' ? entry - 100 : entry + 100).toFixed(2)),
-      tp1: Number((dir === 'BUY' ? entry + 100 : entry - 100).toFixed(2)),
-      score: null,
-      lot: 0.05,
-      status: 'open',
-    }));
-    setSignalHistory((prev) => [...testTrades, ...prev.filter((row) => !testTrades.some((trade) => trade.id === row.id))].slice(0, 200));
-    try { localStorage.setItem(seedKey, '1'); } catch (e) { /* noop */ }
-  }, [activeSymbol, price]);
 
   function openManualTrade(dir) {
     if (manualTrade || price == null) return;
