@@ -56,15 +56,10 @@ export default function CandleChart({ id, rows, width = 460, height = 260, ema =
       if (pts.length > 1) emaPoints = pts.join(' ');
     }
 
-    const labelRows = [];
     const drawnLevels = [];
     levels.forEach((L) => {
       if (L.v == null || L.v < minV || L.v > maxV) return;
-      const ly = y(L.v);
-      let col = 0;
-      while (labelRows.some((r) => r.col === col && Math.abs(r.y - ly) < 11)) col++;
-      labelRows.push({ col, y: ly });
-      drawnLevels.push({ ...L, y: ly, labelX: padL + 5 + col * 58 });
+      drawnLevels.push({ ...L, y: y(L.v) });
     });
 
     return { W, H, padL, padR, padT, plotW, plotH, minV, maxV, y, slot, n, gridLines, vGrid, candles, xLabels, lastY, lastUp, lastRow, emaPoints, drawnLevels };
@@ -91,6 +86,11 @@ export default function CandleChart({ id, rows, width = 460, height = 260, ema =
   const hoverRow = hoverIdx != null ? rows[hoverIdx] : null;
   const hoverX = hoverIdx != null ? padL + slot * hoverIdx + slot / 2 : null;
   const hoverPrice = hoverY != null ? maxV - ((hoverY - padT) / plotH) * (maxV - minV) : null;
+  const hoveredLevel = hoverY == null ? null : drawnLevels.reduce((nearest, level) => {
+    const distance = Math.abs(hoverY - level.y);
+    if (distance > 8 || (nearest && distance > nearest.distance)) return nearest;
+    return { level, distance };
+  }, null)?.level;
 
   return (
     <div className="tf-chart-wrap">
@@ -136,11 +136,18 @@ export default function CandleChart({ id, rows, width = 460, height = 260, ema =
         {drawnLevels.map((L, i) => (
           <g key={i} opacity={L.opacity ?? 1}>
             <line x1={padL} x2={W - padR} y1={L.y} y2={L.y} stroke={L.color} strokeWidth={L.strong ? 1.5 : 1} opacity={L.strong ? 0.95 : 0.6} strokeDasharray={L.dash || undefined} />
-            {hoverY != null && Math.abs(hoverY - L.y) <= 8 && (
-              <text x={L.labelX} y={L.y - 4} className="candle-axis" fill={L.color}>{L.label}</text>
-            )}
           </g>
         ))}
+
+        {hoveredLevel && (() => {
+          const labelWidth = Math.max(38, hoveredLevel.label.length * 6.4 + 14);
+          return (
+            <g pointerEvents="none">
+              <rect x={padL} y={hoveredLevel.y - 10} width={labelWidth} height={20} rx="3" fill="var(--bg)" stroke={hoveredLevel.color} strokeWidth="1" />
+              <text x={padL + 7} y={hoveredLevel.y + 3.5} className="candle-axis" fill="var(--text-primary)">{hoveredLevel.label}</text>
+            </g>
+          );
+        })()}
 
         {hoverX != null && <line x1={hoverX} x2={hoverX} y1={padT} y2={padT + plotH} className="cd-crosshair-v" style={{ opacity: 1 }} />}
         {hoverY != null && <line x1={padL} x2={W - padR} y1={hoverY} y2={hoverY} className="cd-crosshair-v" style={{ opacity: 1 }} />}
