@@ -1,0 +1,57 @@
+/* Dark-first. This is a trading terminal, not a document: the V2 brief asks
+   for a very dark ground with slightly lighter panels and restrained colour,
+   where colour carries meaning (green = long, red = short, amber = caution)
+   instead of decorating. There is exactly one palette — no light variant to
+   drift out of sync, and no second block that could silently override it. */
+:root{
+  color-scheme: dark;
+  --bg:#07070d;
+  --surface:#101019;
+  --surface-2:#171724;
+  --border:#26263a;
+  --border-soft:#1c1c2b;
+  --text-primary:#eceaf5;
+  --text-secondary:#a9a5c0;
+  --text-muted:#736f8c;
+  --gold:#c98500;
+  --gold-soft:rgba(201,133,0,0.16);
+  --violet:#9085e9;
+  --violet-soft:rgba(144,133,233,0.16);
+  --blue:#3987e5;
+  --blue-soft:rgba(57,135,229,0.16);
+  --teal:#3fc496;
+  --teal-soft:rgba(25,158,112,0.18);
+  --good:#22c55e;
+  --good-soft:rgba(34,197,94,0.13);
+  --bad:#ef4444;
+  --bad-soft:rgba(239,68,68,0.13);
+  --warn:#e0a326;
+  --warn-soft:rgba(224,163,38,0.14);
+  --grid:#1e1e2e;
+  --identity:#b6b0f2;
+  --identity-soft:rgba(182,176,242,0.14);
+  --silver:#9ca3c4;
+  --silver-soft:rgba(156,163,196,0.14);
+  --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px -18px rgba(0,0,0,0.8);
+}
+/* No second palette: the tokens above are the only ones. A prefers-color-scheme
+   or [data-theme] override used to restate an older dark palette here, which
+   would now silently win over the terminal palette for some viewers. */
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text-primary);
+  font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:1560px;
+  margin:0 auto;
+  padding:0 20px 64px;
+}
+/* Reading-width column for the long-form research//calendar tabs, which are
+   prose and tables rather than terminal panels. */
+.readable{ max-width:1080px; }
+.num{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }

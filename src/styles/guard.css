@@ -1,0 +1,28 @@
+.guard-strip{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+  gap:1px; background:var(--border-soft); border:1px solid var(--border);
+  border-radius:10px; overflow:hidden; margin-top:12px;
+}
+.guard-strip .ctx-cell{ background:var(--surface); }
+.guard-strip.breach{ border-color:var(--bad); }
+.guard-cfg{ display:flex; gap:12px; flex-wrap:wrap; margin:16px 0 18px; }
+.guard-cfg .jr-field input{ width:130px; }
+.guard-meter{ margin-bottom:18px; }
+.guard-meter .gm-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:6px; flex-wrap:wrap; }
+.guard-meter .gm-label{ font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); }
+.guard-meter .gm-left{ font-family:"IBM Plex Mono", monospace; font-size:17px; font-variant-numeric:tabular-nums; }
+.guard-meter .gm-bar{ height:8px; border-radius:4px; background:var(--surface-2); overflow:hidden; }
+.guard-meter .gm-bar i{ display:block; height:100%; background:var(--good); transition:width .25s; }
+.guard-meter .gm-bar i.warn{ background:var(--warn); }
+.guard-meter .gm-bar i.bad{ background:var(--bad); }
+/* unscoped: the closing caveats sit outside a meter and must stay small too */
+.gm-note{ font-size:11.5px; color:var(--text-muted); margin:6px 0 0; line-height:1.5; }
+.guard-scenario{
+  border:1px solid var(--border); border-left:3px solid var(--text-muted);
+  border-radius:8px; padding:12px 14px; margin-top:4px; background:var(--surface-2);
+}
+.guard-scenario.ok{ border-left-color:var(--good); }
+.guard-scenario.warn{ border-left-color:var(--warn); }
+.guard-scenario.bad{ border-left-color:var(--bad); }
+.guard-scenario h4{ margin:0 0 6px; font-size:12.5px; font-family:"IBM Plex Mono", monospace; color:var(--text-primary); }
+.guard-scenario p{ margin:0; font-size:12.5px; color:var(--text-secondary); line-height:1.6; }

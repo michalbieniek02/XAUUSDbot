@@ -1,0 +1,34 @@
+/* Used by <Chip>/<Ticker> (src/components/Bars.jsx) across the top bar,
+   risk calculator, history stats, journal summary, etc. */
+.ticker{
+  margin-top:22px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.chip{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 14px;
+  box-shadow:var(--shadow);
+  min-width:120px;
+}
+.chip .k{ font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-muted); margin-bottom:4px; }
+.chip .v{ font-size:17px; font-weight:600; }
+.chip .v.up{ color:var(--good); }
+.chip .v.down{ color:var(--bad); }
+
+/* numerology — a small panel sitting top-right of the header, in normal flow
+   (not floating), clear of the header text and every card below it.
+   Used in ResearchTab. */
+.np-panel{
+  flex:0 0 156px; background:var(--surface); border:1px solid var(--border);
+  border-left:2.5px solid var(--identity); border-radius:10px; padding:13px 15px;
+  box-shadow:var(--shadow);
+}
+.np-panel .np-label{ font-size:9.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin:0 0 10px; }
+.np-panel .np-row{ margin-bottom:8px; line-height:1.25; }
+.np-panel .np-row:last-child{ margin-bottom:0; }
+.np-panel .np-row .k{ font-size:10px; color:var(--text-muted); display:block; }
+.np-panel .np-row .v{ font-size:14px; font-weight:600; color:var(--identity); font-family:"IBM Plex Mono",monospace; }

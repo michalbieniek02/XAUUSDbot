@@ -1,0 +1,245 @@
+/* ===================================================================
+   V2 TERMINAL SHELL
+   Hierarchy, not density: LEVEL 1 is the decision (direction, entry,
+   stop, target), LEVEL 2 the evidence behind it, LEVEL 3 the research
+   layer (astro / Gann / numerology / social), which must never compete
+   visually with a trading signal. Tabs carry that split; type scale and
+   colour carry it inside the terminal tab.
+   =================================================================== */
+
+/* --- top bar: what the market is doing, always on screen --- */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+.term-top{
+  position:sticky; top:0; z-index:40;
+  background:rgba(7,7,13,0.92);
+  backdrop-filter:saturate(150%) blur(12px);
+  border-bottom:1px solid var(--border);
+  margin:0 -20px 0; padding:0 20px;
+}
+.term-top-in{
+  max-width:1560px; margin:0 auto;
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  min-height:56px; padding:8px 0;
+}
+.tt-inst{
+  font-family:"IBM Plex Mono", monospace; font-weight:600;
+  letter-spacing:.08em; font-size:13px; color:var(--text-primary);
+  display:flex; align-items:center; gap:8px; flex:none;
+}
+.tt-inst::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--gold); flex:none; }
+.tt-price{ font-family:"IBM Plex Mono", monospace; font-size:26px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums; }
+.tt-change{ font-family:"IBM Plex Mono", monospace; font-size:13px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.tt-metrics{ display:flex; gap:16px; flex-wrap:wrap; margin-left:auto; align-items:center; }
+.tt-metric{ display:flex; flex-direction:column; gap:2px; min-width:56px; }
+.tt-metric .k{ font-family:"IBM Plex Mono", monospace; font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); }
+.tt-metric .v{ font-family:"IBM Plex Mono", monospace; font-size:12.5px; font-variant-numeric:tabular-nums; color:var(--text-secondary); }
+.tt-metric .v.up{ color:var(--good); }
+.tt-metric .v.down{ color:var(--bad); }
+.tt-metric .v.warn{ color:var(--warn); }
+
+/* instrument switch (XAU/USD ↔ ETH/USD), sits inline in the top bar */
+.sym-switch{display:inline-flex;gap:2px;background:var(--surface-2);
+  border:1px solid var(--border);border-radius:8px;padding:2px;margin-right:10px;flex:0 0 auto;}
+.sym-btn{appearance:none;background:none;border:0;cursor:pointer;color:var(--text-muted);
+  font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;padding:6px 9px;border-radius:6px;
+  white-space:nowrap;}
+.sym-btn:hover{color:var(--text-primary);}
+.sym-btn.is-on{background:var(--gold);color:#111;}
+.sym-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+/* --- tabs --- */
+.term-tabs{
+  position:sticky; top:56px; z-index:35;
+  background:rgba(7,7,13,0.92);
+  backdrop-filter:saturate(150%) blur(12px);
+  border-bottom:1px solid var(--border);
+  margin:0 -20px 22px; padding:0 20px;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+}
+.term-tabs-in{ max-width:1560px; margin:0 auto; display:flex; gap:2px; }
+.term-tab{
+  appearance:none; border:none; background:transparent; cursor:pointer;
+  font-family:"IBM Plex Mono", monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:var(--text-muted); padding:13px 14px; white-space:nowrap;
+  border-bottom:2px solid transparent; transition:color .12s, border-color .12s;
+}
+.term-tab:hover{ color:var(--text-secondary); }
+.term-tab[aria-selected="true"]{ color:var(--text-primary); border-bottom-color:var(--gold); }
+.term-tab .tab-dot{ display:inline-block; width:6px; height:6px; border-radius:50%; margin-left:7px; vertical-align:middle; }
+
+/* --- terminal grid: chart is the work surface, signal is the verdict --- */
+.term-grid{ display:grid; grid-template-columns:minmax(0,1fr) 372px; gap:18px; align-items:start; }
+
+.panel{ 
+  background:var(--surface);
+  border:1px solid var(--border); 
+  border-radius:10px;
+  padding: 1%;
+}
+.panel-head{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:11px 14px; border-bottom:1px solid var(--border-soft);
+}
+.panel-title{
+  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--text-muted); margin:0;
+}
+
+/* --- main chart --- */
+.mainchart-wrap{ position:relative; padding:10px 4px 4px; }
+.mainchart-wrap svg{ display:block; width:100%; height:clamp(320px, 46vh, 520px); }
+.tf-switch{ display:flex; gap:1px; margin-left:auto; background:var(--surface-2); border-radius:7px; padding:2px; }
+.tf-switch button{
+  appearance:none; border:none; background:transparent; cursor:pointer;
+  font-family:"IBM Plex Mono", monospace; font-size:11px; font-weight:500;
+  color:var(--text-muted); padding:5px 9px; border-radius:5px; transition:background .12s, color .12s;
+}
+.tf-switch button[aria-pressed="true"]{ background:var(--bg); color:var(--text-primary); }
+.chart-legend{ display:flex; gap:14px; flex-wrap:wrap; padding:8px 14px 12px; }
+.chart-legend span{ font-family:"IBM Plex Mono", monospace; font-size:10px; color:var(--text-muted); display:flex; align-items:center; gap:5px; }
+.chart-legend i{ width:14px; height:0; border-top:2px solid currentColor; display:inline-block; }
+.chart-legend .legend-item{ position:relative; cursor:help; outline:none; }
+.chart-legend .legend-item::after{
+  content:attr(data-description); position:absolute; left:50%; bottom:calc(100% + 8px); z-index:20;
+  width:max-content; max-width:280px; padding:8px 10px; border:1px solid var(--border); border-radius:7px;
+  background:var(--surface-2); color:var(--text-secondary); box-shadow:var(--shadow); line-height:1.4;
+  white-space:normal; pointer-events:none; opacity:0; transform:translate(-50%,4px); transition:opacity .12s, transform .12s;
+}
+.chart-legend .legend-item:hover::after, .chart-legend .legend-item:focus-visible::after{ opacity:1; transform:translate(-50%,0); }
+
+/* --- SIGNAL CARD: the visual centre of the application --- */
+.sigcard{ position:sticky; top:118px; overflow:hidden; }
+.sigcard.is-long{ border-color:rgba(34,197,94,0.45); }
+.sigcard.is-short{ border-color:rgba(239,68,68,0.45); }
+.sig-state{
+  font-family:"IBM Plex Mono", monospace; font-size:10px; letter-spacing:.11em;
+  text-transform:uppercase; padding:4px 8px; border-radius:5px;
+  background:var(--surface-2); color:var(--text-secondary); margin-left:auto;
+}
+.sig-state[data-state="CONFIRMED"]{ background:var(--good-soft); color:var(--good); }
+.sig-state[data-state="READY"]{ background:var(--warn-soft); color:var(--warn); }
+.sig-state[data-state="FORMING"]{ background:var(--surface-2); color:var(--text-secondary); }
+.sig-state[data-state="NO_TRADE"]{ background:var(--bad-soft); color:var(--bad); }
+.sig-verdict{
+  font-family:"IBM Plex Mono", monospace; font-weight:600;
+  font-size:clamp(34px, 6vw, 46px); line-height:1; letter-spacing:-.01em;
+  padding:20px 16px 6px; color:var(--text-secondary);
+}
+.sig-verdict.long{ color:var(--good); }
+.sig-verdict.short{ color:var(--bad); }
+.sig-verdict.none{ color:var(--text-muted); }
+.sig-sub{ font-size:12.5px; color:var(--text-secondary); padding:0 16px 14px; margin:0; line-height:1.5; }
+.sig-quality{ display:flex; align-items:baseline; gap:10px; padding:0 16px 14px; }
+.sig-grade{ font-family:"IBM Plex Mono", monospace; font-size:22px; font-weight:600; line-height:1; }
+.sig-grade.g-a{ color:var(--good); } .sig-grade.g-b{ color:var(--teal); } .sig-grade.g-c{ color:var(--warn); }
+.sig-score{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--text-muted); }
+.sig-meter{ height:3px; border-radius:2px; background:var(--surface-2); margin:0 16px 16px; overflow:hidden; }
+.sig-meter i{ display:block; height:100%; background:var(--text-secondary); }
+.sig-meter i.ok{ background:var(--good); }
+
+/* evidence checklist */
+.sig-cond{ list-style:none; margin:0; padding:0 16px 14px; border-top:1px solid var(--border-soft); padding-top:13px; }
+.sig-cond li{
+  display:flex; align-items:center; gap:9px; padding:4px 0;
+  font-family:"IBM Plex Mono", monospace; font-size:11.5px;
+}
+.sig-cond .c-mark{ width:13px; flex:none; text-align:center; font-size:11px; }
+.sig-cond .c-key{ color:var(--text-muted); letter-spacing:.04em; text-transform:uppercase; font-size:10px; flex:none; width:104px; }
+.sig-cond .c-val{ color:var(--text-secondary); margin-left:auto; text-align:right; }
+.sig-cond li.ok .c-mark{ color:var(--good); }
+.sig-cond li.no .c-mark{ color:var(--text-muted); }
+.sig-cond li.block .c-mark, .sig-cond li.block .c-val{ color:var(--bad); }
+.sig-cond li.warn .c-mark, .sig-cond li.warn .c-val{ color:var(--warn); }
+
+/* execution levels */
+.sig-levels{ border-top:1px solid var(--border-soft); padding:13px 16px 6px; }
+.sig-lvl{ display:flex; align-items:baseline; justify-content:space-between; padding:5px 0; }
+.sig-lvl .k{ font-family:"IBM Plex Mono", monospace; font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); }
+.sig-lvl .v{ font-family:"IBM Plex Mono", monospace; font-size:16px; font-variant-numeric:tabular-nums; }
+.sig-lvl.entry .v{ color:var(--text-primary); font-size:19px; }
+.sig-lvl.sl .v{ color:var(--bad); }
+.sig-lvl.tp .v{ color:var(--good); }
+.sig-wait{ margin:0; padding:0 16px 14px; list-style:none; }
+.sig-wait li{ font-size:12px; color:var(--text-secondary); line-height:1.6; }
+.sig-foot{ margin:0; padding:12px 16px 14px; border-top:1px solid var(--border-soft); font-size:10.5px; color:var(--text-muted); line-height:1.5; }
+
+/* --- market context bar: compact rows, not a card each --- */
+.ctx-bar{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(104px, 1fr));
+  gap:1px; background:var(--border-soft);
+  border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-top:18px;
+}
+.ctx-cell{ background:var(--surface); padding:9px 12px; }
+.ctx-cell .k{ font-family:"IBM Plex Mono", monospace; font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:3px; }
+.ctx-cell .v{ font-family:"IBM Plex Mono", monospace; font-size:13px; font-variant-numeric:tabular-nums; color:var(--text-primary); }
+.ctx-cell .v.up{ color:var(--good); } .ctx-cell .v.down{ color:var(--bad); } .ctx-cell .v.muted{ color:var(--text-muted); }
+
+/* --- collapsible detail sections, so evidence stays reachable but quiet --- */
+details.term-more{ margin-top:18px; border:1px solid var(--border); border-radius:10px; background:var(--surface); }
+details.term-more > summary{
+  cursor:pointer; list-style:none; padding:12px 14px;
+  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--text-muted);
+}
+details.term-more > summary::-webkit-details-marker{ display:none; }
+details.term-more > summary::before{ content:"▸ "; color:var(--text-muted); }
+details.term-more[open] > summary::before{ content:"▾ "; }
+details.term-more > summary:hover{ color:var(--text-secondary); }
+.term-more-body{ padding:0 14px 14px; border-top:1px solid var(--border-soft); padding-top:14px; }
+
+/* --- tab panels --- */
+.tabpanel[hidden]{ display:none; }
+.research-note{
+  border:1px solid var(--border); border-left:3px solid var(--warn);
+  background:var(--surface); border-radius:8px; padding:12px 14px; margin:0 0 22px;
+  font-size:12.5px; color:var(--text-secondary); line-height:1.6;
+}
+
+/* --- mobile: signal first, then chart; tab bar at the bottom --- */
+.mobile-nav{ display:none; }
+
+@media (max-width:1180px){ .term-grid{ grid-template-columns:1fr; } }
+
+@media (max-width:720px){
+  .term-tabs{ display:none; }
+  .term-top{ margin-bottom:16px; }
+  .term-grid{ gap:14px; }
+  .sigcard{ position:static; }
+  .term-grid .sigcard{ order:-1; }
+  .mainchart-wrap svg{ height:clamp(260px, 38vh, 360px); }
+  body{ padding-bottom:64px; }
+  .mobile-nav{
+    display:flex; position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:rgba(7,7,13,0.96); backdrop-filter:blur(12px);
+    border-top:1px solid var(--border);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .mobile-nav button{
+    flex:1; appearance:none; border:none; background:transparent; cursor:pointer;
+    font-family:"IBM Plex Mono", monospace; font-size:9.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--text-muted); padding:11px 2px 12px;
+    border-top:2px solid transparent;
+  }
+  .mobile-nav button[aria-selected="true"]{ color:var(--text-primary); border-top-color:var(--gold); }
+  /* On a phone the top bar was wrapping into three rows and eating half the
+     screen before the signal was even visible. Keep price + change on one
+     line and let the secondary metrics scroll sideways in a single row. */
+  .term-top{ position:static; }
+  .term-top-in{ min-height:0; gap:10px; padding:10px 0 8px; flex-wrap:nowrap; align-items:baseline; }
+  .tt-inst{ font-size:11px; }
+  .tt-price{ font-size:23px; }
+  .tt-change{ font-size:12px; }
+  .tt-metrics{
+    gap:16px; width:100%; margin-left:0; flex-wrap:nowrap;
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding:0 0 9px; scrollbar-width:none;
+  }
+  .tt-metrics::-webkit-scrollbar{ display:none; }
+  .tt-metric{ flex:none; }
+  .sig-verdict{ padding-top:16px; }
+  .mobile-nav button{ font-size:8.5px; letter-spacing:.02em; }
+}

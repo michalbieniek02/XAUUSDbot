@@ -1,0 +1,42 @@
+/* Nic w App.jsx / komponentach obecnie nie renderuje tych klas — w wersji
+   terminalowej (V2 SHELL, patrz terminal.css) górny pasek to .term-top, nie
+   ten <header>. Zostawiam 1:1 z Twojego pliku na wypadek, gdybyś chciał
+   dodać osobną sekcję powitalną/opisową nad terminalem. Jeśli nie — możesz
+   spokojnie pominąć import tego pliku w index.css. */
+
+header{ margin-bottom:28px; display:flex; gap:22px; align-items:flex-start; flex-wrap:wrap; }
+.lp-mark{ flex:none; display:flex; gap:4px; padding-top:5px; height:64px; }
+.lp-mark span{ width:4px; border-radius:2px; background:linear-gradient(var(--identity), var(--silver)); }
+.header-text{ min-width:280px; flex:1 1 320px; }
+.eyebrow{
+  font-family:"IBM Plex Mono", monospace;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:11.5px;
+  color:var(--identity);
+  margin:0 0 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.eyebrow::before{
+  content:"";
+  width:6px;height:6px;border-radius:50%;
+  background:var(--identity);
+  display:inline-block;
+}
+h1{
+  font-family:"Fraunces", Georgia, serif;
+  font-weight:600;
+  font-size:clamp(28px,4vw,40px);
+  line-height:1.08;
+  letter-spacing:-.01em;
+  margin:0 0 8px;
+  text-wrap:balance;
+}
+.sub{
+  color:var(--text-secondary);
+  font-size:15px;
+  max-width:62ch;
+  margin:0;
+}

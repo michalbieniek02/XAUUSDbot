@@ -1,0 +1,46 @@
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:24px;
+  margin-top:22px;
+}
+.card h2{
+  font-family:"Fraunces", Georgia, serif;
+  font-size:20px;
+  font-weight:600;
+  margin:0 0 4px;
+  padding-left:14px;
+  border-left:3px double var(--silver);
+}
+.card .card-sub{ color:var(--text-muted); font-size:13px; margin:0 0 18px; padding-left:14px; }
+
+/* planet position table (Research), signal history table (Historia), etc. */
+table.levels{ width:100%; border-collapse:collapse; font-size:13px; }
+table.levels th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--border); }
+table.levels td{ padding:7px 8px; border-bottom:1px solid var(--border); color:var(--text-secondary); }
+table.levels tr:last-child td{ border-bottom:none; }
+table.levels td.price{ color:var(--text-primary); font-weight:600; }
+
+/* multi-timeframe trend grid (EngineDetails.jsx MtfGrid) */
+.mtf-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; }
+.mtf-tile{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+.mtf-tile .mtf-tf{ font-family:"IBM Plex Mono",monospace; font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin-bottom:9px; }
+.mtf-tile .mtf-dir{ font-size:24px; font-weight:700; line-height:1; margin-bottom:7px; }
+.mtf-tile .mtf-dir.up{ color:var(--good); }
+.mtf-tile .mtf-dir.down{ color:var(--bad); }
+.mtf-tile .mtf-dir.flat{ color:var(--text-muted); }
+.mtf-tile .mtf-detail{ font-size:11px; color:var(--text-muted); line-height:1.5; font-family:"IBM Plex Mono",monospace; }
+
+/* two-col layout + fundamental/astro background paragraphs (Kalendarz) */
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.bg-para{ color:var(--text-secondary); font-size:14px; line-height:1.65; margin:0 0 10px; }
+.bg-para:last-child{ margin-bottom:0; }
+.bg-para b{ color:var(--text-primary); }
+
+.legend{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px; font-size:12.5px; color:var(--text-secondary); }
+.legend span{ display:inline-flex; align-items:center; gap:6px; }
+.legend i{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+@media (max-width:720px){ .grid2{ grid-template-columns:1fr; } }

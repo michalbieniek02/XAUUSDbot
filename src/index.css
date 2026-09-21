@@ -1,0 +1,14 @@
+/* Kolejność ma znaczenie: tokens.css definiuje zmienne (--good, --bad,
+   --violet, --gold, ...), z których korzystają wszystkie kolejne pliki —
+   musi wczytać się pierwsza. legacy-header.css jest opcjonalny (patrz
+   komentarz w środku) — usuń tę linię, jeśli nie używasz <header>. */
+@import "./styles/tokens.css";
+@import "./styles/chips.css";
+@import "./styles/cards.css";
+@import "./styles/charts.css";
+@import "./styles/timeline.css";
+@import "./styles/terminal.css";
+@import "./styles/journal.css";
+@import "./styles/guard.css";
+@import "./styles/footer.css";
+@import "./styles/legacy-header.css";
