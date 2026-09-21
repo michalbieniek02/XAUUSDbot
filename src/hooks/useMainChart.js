@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchOhlc, barsToAscending } from '../lib/api';
 import { fmtOpenTime } from '../lib/engine';
 
-const MAIN_TF_LIMIT = { '5m': 96, '15m': 96, '1h': 96, '4h': 72, '1d': 60 };
+const MAIN_TF_LIMIT = { '1m': 120, '5m': 96, '15m': 96, '1h': 96, '4h': 72, '1d': 60 };
 
 function toRows(barsAsc) { return barsAsc.map((b) => [fmtOpenTime(b.openTime), b.open, b.high, b.low, b.close]); }
 

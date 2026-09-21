@@ -5,7 +5,7 @@ import { H1Box, M15Box, M5Box, DayTypeBox, MtfGrid } from './EngineDetails';
 import { MAX_SCORE, EMA20_MIN_BARS, fmtPnl } from '../lib/engine';
 
 const MAIN_TF_OPTIONS = [
-  ['5m', 'M5'], ['15m', 'M15'], ['1h', 'H1'], ['4h', 'H4'], ['1d', 'D1'],
+  ['1m', 'M1'], ['5m', 'M5'], ['15m', 'M15'], ['1h', 'H1'], ['4h', 'H4'], ['1d', 'D1'],
 ];
 
 function legendDescription(label) {
