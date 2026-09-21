@@ -12,7 +12,7 @@ export default function PoziomyTab({ lastPdhPdl, lastAsianRange, lastVwap, lastO
     <section className="tabpanel" data-tab="poziomy">
       <section className="card">
         <h2>Poziomy referencyjne — PDH/PDL, Asian Range, VWAP, NY Opening Range</h2>
-        <p className="card-sub">Godziny w UTC: sesja azjatycka 00:00–09:00, otwarcie NY 13:30–13:45. Wyłącznie informacyjne.</p>
+        <p className="card-sub">Godziny UTC+2: sesja azjatycka 02:00–11:00, Londyn 10:00–18:00, otwarcie NY 15:30–15:45. Wyłącznie informacyjne.</p>
         <div className="tf-grid">
           <div className="tf-card">
             <h3>PDH / PDL</h3>
@@ -40,13 +40,13 @@ export default function PoziomyTab({ lastPdhPdl, lastAsianRange, lastVwap, lastO
                   Cena: ${price.toFixed(2)} &nbsp;·&nbsp; do High: {priceVsLevel(price, lastAsianRange.hi)} &nbsp;·&nbsp; do Low: {priceVsLevel(price, lastAsianRange.lo)}
                 </p>
               </>
-            ) : <p className="card-sub">Sesja azjatycka jeszcze się nie otworzyła (start 00:00 UTC).</p>}
+            ) : <p className="card-sub">Sesja azjatycka jeszcze się nie otworzyła (start 02:00 UTC+2).</p>}
           </div>
           <div className="tf-card">
             <h3>VWAP (dziś, tick-volume)</h3>
             {lastVwap != null && price != null ? (
               <>
-                <Ticker><Chip k="VWAP (od 00:00 UTC, tick-volume)" v={'$' + lastVwap.toFixed(2)} /></Ticker>
+                <Ticker><Chip k="VWAP (od 02:00 UTC+2, tick-volume)" v={'$' + lastVwap.toFixed(2)} /></Ticker>
                 <p className="card-sub" style={{ marginTop: 12 }}>Cena: ${price.toFixed(2)} &nbsp;·&nbsp; {priceVsLevel(price, lastVwap)} względem VWAP</p>
                 <p className="card-sub" style={{ marginTop: 6, fontSize: 11.5 }}>Liczony z tick-volume świec M15 — XAUUSD u brokera detalicznego nie ma realnego wolumenu giełdowego. Przyzwoity proxy aktywności, ale to nie jest VWAP z wolumenu obrotu.</p>
               </>

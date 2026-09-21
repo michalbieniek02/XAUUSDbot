@@ -1,4 +1,4 @@
-import { MAX_SCORE, VALID_SCORE, MIN_LOT, stopDistanceFor, spreadLimitFor, entryDriftCheck, fmtOpenTime } from './engine';
+import { MAX_SCORE, VALID_SCORE, MIN_LOT, stopDistanceFor, spreadLimitFor, entryDriftCheck, fmtClockTime, fmtOpenTime } from './engine';
 
 function condRow(key, val, cls) { return { key, val, cls }; }
 
@@ -140,7 +140,7 @@ export function evaluateSignal(ctx) {
     sub: valid && drift.blocked
       ? `Łańcuch H1 → M15 → M5 się zgadza (ocena ${score}/${MAX_SCORE}), ale cena zdążyła odjechać od wejścia. Poczekaj na kolejną świecę.`
       : valid
-      ? `Cały łańcuch H1 → M15 → M5 się zgadza, ocena ${score}/${MAX_SCORE} przekracza próg. Wejście z zamkniętej świecy M5 ${fmtOpenTime(m5State.last.openTime)} UTC, ważne do ${expiryTime.toISOString().slice(11, 16)} UTC.`
+      ? `Cały łańcuch H1 → M15 → M5 się zgadza, ocena ${score}/${MAX_SCORE} przekracza próg. Wejście z zamkniętej świecy M5 ${fmtOpenTime(m5State.last.openTime)} UTC+2, ważne do ${fmtClockTime(expiryTime)} UTC+2.`
       : `Łańcuch H1 → M15 → M5 jest kompletny w kierunku <b>${dir === 'BUY' ? 'LONG' : 'SHORT'}</b>, ale ocena ${score}/${MAX_SCORE} nie sięga progu ${VALID_SCORE}/${MAX_SCORE}.`,
     waiting: valid ? null : [`wyższej zgodności warunków (brakuje ${VALID_SCORE - score} pkt do progu)`],
   };

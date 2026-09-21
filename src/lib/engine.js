@@ -216,8 +216,17 @@ export function currentSessionLabel() {
   return 'poza głównymi sesjami';
 }
 
+const DISPLAY_TIME_OFFSET_MS = 2 * 60 * 60 * 1000;
+const pad2 = (value) => String(value).padStart(2, '0');
+
+export function fmtClockTime(iso) {
+  const date = new Date(new Date(iso).getTime() + DISPLAY_TIME_OFFSET_MS);
+  return `${pad2(date.getUTCHours())}:${pad2(date.getUTCMinutes())}`;
+}
+
 export function fmtOpenTime(iso) {
-  return iso.slice(5, 7) + '-' + iso.slice(8, 10) + ' ' + iso.slice(11, 16);
+  const date = new Date(new Date(iso).getTime() + DISPLAY_TIME_OFFSET_MS);
+  return `${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())} ${fmtClockTime(iso)}`;
 }
 
 export function fmtPnl(v) {

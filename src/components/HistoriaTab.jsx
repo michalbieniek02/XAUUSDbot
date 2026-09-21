@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
-import { fmtPnl, computePnl } from '../lib/engine';
+import { fmtOpenTime, fmtPnl, computePnl } from '../lib/engine';
 import { Ticker, Chip } from './Bars';
-
-function fmtHistTime(iso) { return iso.slice(5, 7) + '-' + iso.slice(8, 10) + ' ' + iso.slice(11, 16); }
 
 function signalStatusLabel(s) {
   switch (s.status) {
@@ -62,7 +60,7 @@ export default function HistoriaTab({ activeSymbol, signalHistory, manualTrade, 
         <h2>Historia sygnałów i trejdów</h2>
         <p className="card-sub">Każdy sygnał VALID (ocena ≥7/10) trafia tu razem z Entry/SL/TP1, a potem jest sprawdzany względem ceny. Wiersze pochodzą z backendu (cron co 5 min) — to nie jest księgowość realnych transakcji z MT5.</p>
         <p className="card-sub" style={{ fontSize: 11.5, marginTop: -10 }}>
-          Backend: {backendStatus ? `sprawdzono o ${fmtHistTime(backendStatus.checkedAt)} UTC` : 'jeszcze się nie odezwał'}
+          Backend: {backendStatus ? `sprawdzono o ${fmtOpenTime(backendStatus.checkedAt)} UTC+2` : 'jeszcze się nie odezwał'}
         </p>
 
         <div style={{ marginBottom: 18, paddingBottom: 18, borderBottom: '1px solid var(--border)' }}>
@@ -125,7 +123,7 @@ export default function HistoriaTab({ activeSymbol, signalHistory, manualTrade, 
             )}
             <div style={{ overflowX: 'auto' }}>
               <table className="levels">
-                <thead><tr><th>Data (UTC)</th><th>Źródło</th><th>Kier.</th><th>Wejście</th><th>SL</th><th>TP1</th><th>Ocena</th><th>Status</th><th>P/L $</th></tr></thead>
+                <thead><tr><th>Data (UTC+2)</th><th>Źródło</th><th>Kier.</th><th>Wejście</th><th>SL</th><th>TP1</th><th>Ocena</th><th>Status</th><th>P/L $</th></tr></thead>
                 <tbody>
                   {forSymbol.slice(0, 30).map((s) => {
                     const st = signalStatusLabel(s);
@@ -134,7 +132,7 @@ export default function HistoriaTab({ activeSymbol, signalHistory, manualTrade, 
                     const displayPnl = isLive ? computePnl(s.dir, s.entry, mid, s.lot, rowSymbol(s)) : s.pnl;
                     return (
                       <tr key={s.id}>
-                        <td>{fmtHistTime(s.ts)}</td>
+                        <td>{fmtOpenTime(s.ts)}</td>
                         <td>{srcLabel}</td>
                         <td className="price">{s.dir}</td>
                         <td className="price">${s.entry.toFixed(2)}</td>

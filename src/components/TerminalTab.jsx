@@ -10,7 +10,7 @@ const MAIN_TF_OPTIONS = [
 
 function legendDescription(label) {
   if (label === 'EMA20') return 'Średnia wykładnicza z 20 ostatnich świec — pokazuje krótkoterminowy kierunek ceny.';
-  if (label === 'VWAP') return 'Średnia cena bieżącego dnia ważona tick-volume, liczona od 00:00 UTC.';
+  if (label === 'VWAP') return 'Średnia cena bieżącego dnia ważona tick-volume, liczona od 02:00 czasu UTC+2.';
   if (label === 'PDH') return 'Previous Day High — najwyższa cena poprzedniego zamkniętego dnia.';
   if (label === 'PDL') return 'Previous Day Low — najniższa cena poprzedniego zamkniętego dnia.';
   if (label.endsWith(' H')) return `Najwyższa cena zakresu sesji ${label.startsWith('NY') ? 'nowojorskiej' : label.startsWith('London') ? 'londyńskiej' : 'azjatyckiej'}.`;

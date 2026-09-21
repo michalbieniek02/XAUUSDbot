@@ -15,7 +15,7 @@ export function H1Box({ h1State, lastAtrH1, lastH1Structure, lastH1Choch, minBar
     <>
       <div className="chip" style={{ minWidth: '100%' }}><div className="k">Kierunek H1 (EMA20)</div><div className={'v' + cls}>{label}</div></div>
       <p className="card-sub" style={{ marginTop: 12 }}>
-        EMA20 H1: {fmtEmaPrice(h1State.e20)} &nbsp;·&nbsp; ATR(14) H1: {lastAtrH1 != null ? '$' + lastAtrH1.toFixed(2) : '—'} &nbsp;·&nbsp; ostatnia zamknięta świeca H1: {fmtOpenTime(h1State.last.openTime)} UTC
+        EMA20 H1: {fmtEmaPrice(h1State.e20)} &nbsp;·&nbsp; ATR(14) H1: {lastAtrH1 != null ? '$' + lastAtrH1.toFixed(2) : '—'} &nbsp;·&nbsp; ostatnia zamknięta świeca H1: {fmtOpenTime(h1State.last.openTime)} UTC+2
       </p>
       <p className="card-sub" style={{ marginTop: 6 }}>Struktura (swing HH/HL/LH/LL): <b>{structLabel}</b></p>
       {lastH1Choch && (
@@ -36,7 +36,7 @@ export function M15Box({ m15State, minBars }) {
   return (
     <>
       <div className="chip" style={{ minWidth: '100%' }}><div className="k">M15</div><div className="v">{status}</div></div>
-      <p className="card-sub" style={{ marginTop: 12 }}>EMA20 M15: {fmtEmaPrice(m15State.e20)} &nbsp;·&nbsp; ostatnia zamknięta świeca M15: {fmtOpenTime(m15State.last.openTime)} UTC</p>
+      <p className="card-sub" style={{ marginTop: 12 }}>EMA20 M15: {fmtEmaPrice(m15State.e20)} &nbsp;·&nbsp; ostatnia zamknięta świeca M15: {fmtOpenTime(m15State.last.openTime)} UTC+2</p>
     </>
   );
 }
@@ -50,7 +50,7 @@ export function M5Box({ m5State, minBars }) {
   return (
     <>
       <div className="chip" style={{ minWidth: '100%' }}><div className="k">M5</div><div className="v">{status}</div></div>
-      <p className="card-sub" style={{ marginTop: 12 }}>EMA20 M5: {fmtEmaPrice(m5State.e20)} &nbsp;·&nbsp; ostatnia zamknięta świeca M5: {fmtOpenTime(m5State.last.openTime)} UTC</p>
+      <p className="card-sub" style={{ marginTop: 12 }}>EMA20 M5: {fmtEmaPrice(m5State.e20)} &nbsp;·&nbsp; ostatnia zamknięta świeca M5: {fmtOpenTime(m5State.last.openTime)} UTC+2</p>
     </>
   );
 }
